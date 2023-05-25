@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class BookInventoryService {
 
     private Map<String, Inventory> inventory;
-    public static int sumOfAllInventory;
+    //public static int sumOfAllInventory;
     
 
     public BookInventoryService () {
@@ -25,25 +25,31 @@ public class BookInventoryService {
 
     //GET specific
     public Inventory getInventory(String id) {
-        return null;
+        return inventory.values().stream().filter(i -> i.getId().equals(id)).findFirst().orElse(null);
     }
     
     //GET all
     public List<Inventory> getAllInventory() {
-        return null;
+        return new ArrayList<>(inventory.values());;
     }
 
     //POST
     public String createInventory(Inventory inventoryEntry) {
-        return null;
+        inventory.put(inventoryEntry.getId(), inventoryEntry);
+        return "Inventory created successfully";
     }
 
     //PUT
     public void updateInventory (String id, int newQuantity) {
+        Inventory existingInventory = inventory.get(id);
+        if (inventory.get(id) != null) {
+            inventory.get(id).setQuantity(newQuantity);.
+        }
     }
 
     //DELETE
     public String deleteInventory(String id) {
-        return null;
+        inventory.values().removeIf(i -> i.getId().equals(id));
+        return "Inventory deleted successfully";
     }
 }
